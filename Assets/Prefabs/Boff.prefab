@@ -170,3 +170,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
   velocidade: 5
+  efeitoMorte: {fileID: 8351429754387952625, guid: a0417234b155bb04c9cd6c9902390c62, type: 3}
