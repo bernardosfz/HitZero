@@ -169,4 +169,13 @@ public class GameManager : MonoBehaviour
         TimerCombo = 0f;
         OnComboAlterado?.Invoke();
     }
+
+    // DELETE DEPOIS — apenas para testes
+    [ContextMenu("Zerar Recorde")]
+    public void ZerarRecorde()
+    {
+        PlayerPrefs.DeleteKey("HitZeroRecorde");
+        PlayerPrefs.Save();
+        Debug.Log("Recorde zerado!");
+    }
 }
