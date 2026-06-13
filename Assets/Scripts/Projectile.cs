@@ -26,7 +26,7 @@ public class Projectile : MonoBehaviour
     // ----------------------------------------------------------
     [Header("Vida útil")]
     [Tooltip("Segundos antes de se auto-destruir caso não acerte nada")]
-    [SerializeField] private float tempoDeVida = 3f;
+    [SerializeField] private float tempoDeVida = 1f;
 
     // ----------------------------------------------------------
     // START — agendar auto-destruição

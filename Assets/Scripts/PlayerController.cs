@@ -43,7 +43,9 @@ public class PlayerController : MonoBehaviour
     [Header("Tiro")]
     [SerializeField] private GameObject prefabProjetil;   // Arraste o Prefab do projétil aqui
     [SerializeField] private Transform  pontoDisparo;     // Objeto filho na ponta da arma
-    [SerializeField] private float      velocidadeProjetil = 12f;
+    [SerializeField] private float      velocidadeProjetil = 15f;
+    [SerializeField] private float      cooldownTiro = 0.5f;
+    private float timerCooldownTiro = 0f;         
 
     // ----------------------------------------------------------
     // REFERÊNCIAS PRIVADAS — preenchidas no Start
@@ -190,9 +192,16 @@ public class PlayerController : MonoBehaviour
     // ----------------------------------------------------------
     private void VerificarDisparo()
     {
-        // GetMouseButtonDown(0) = clique esquerdo
-        if (Input.GetMouseButtonDown(0))
+        // Reduzir o cooldown a cada frame
+        if (timerCooldownTiro > 0f)
+            timerCooldownTiro -= Time.deltaTime;
+
+        // Só atira se clicar E o cooldown estiver zerado
+        if (Input.GetMouseButtonDown(0) && timerCooldownTiro <= 0f)
+        {
             Atirar();
+            timerCooldownTiro = cooldownTiro;
+        }
     }
 
     // ----------------------------------------------------------

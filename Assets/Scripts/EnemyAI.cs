@@ -25,7 +25,7 @@ public class EnemyAI : MonoBehaviour
     // CONFIGURAÇÕES — editáveis no Inspector
     // ----------------------------------------------------------
     [Header("Movimento")]
-    [SerializeField] private float velocidade = 3f;
+    [SerializeField] private float velocidade = 5f;
 
     // ----------------------------------------------------------
     // REFERÊNCIA AO JOGADOR — preenchida no Start
@@ -110,10 +110,12 @@ public class EnemyAI : MonoBehaviour
     // ----------------------------------------------------------
     // MORTE DO INIMIGO
     // ----------------------------------------------------------
+    [Header("Efeitos")]
+    [SerializeField] private GameObject efeitoMorte;
     private void Morrer()
     {
-        // DICA FUTURA: instancie um efeito de partícula aqui antes de destruir
-        // Exemplo: Instantiate(efeitoMorte, transform.position, Quaternion.identity);
+        if (efeitoMorte != null)
+            Instantiate(efeitoMorte, transform.position, Quaternion.identity);
 
         Destroy(gameObject);
     }

@@ -30,13 +30,13 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private float taxaSpawnInicial = 2f;
 
     [Tooltip("Menor intervalo possível — limita o caos máximo")]
-    [SerializeField] private float taxaSpawnMinima  = 0.3f;
+    [SerializeField] private float taxaSpawnMinima  = 0.2f;
 
     [Tooltip("Quanto o intervalo diminui a cada ciclo de dificuldade")]
-    [SerializeField] private float reducaoTaxaSpawn = 0.15f;
+    [SerializeField] private float reducaoTaxaSpawn = 0.1f;
 
     [Tooltip("A cada quantos segundos de sobrevivência a dificuldade aumenta")]
-    [SerializeField] private float intervaloAumentoDificuldade = 8f;
+    [SerializeField] private float intervaloAumentoDificuldade = 5f;
 
     [Header("Dimensões da Arena")]
     [Tooltip("Metade da largura da arena — ajuste conforme o tamanho real")]
