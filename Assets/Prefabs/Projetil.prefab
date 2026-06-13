@@ -170,4 +170,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400357601e720a84896002e16d7d0a1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
-  tempoDeVida: 3
+  tempoDeVida: 1
