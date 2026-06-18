@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
     [Header("Tiro")]
     [SerializeField] private GameObject prefabProjetil;   // Arraste o Prefab do projétil aqui
     [SerializeField] private Transform  pontoDisparo;     // Objeto filho na ponta da arma
-    [SerializeField] private float      velocidadeProjetil = 15f;
+    [SerializeField] private float      velocidadeProjetil = 10f;
     [SerializeField] private float      cooldownTiro = 0.5f;
     private float timerCooldownTiro = 0f;         
 
@@ -216,28 +216,23 @@ public class PlayerController : MonoBehaviour
     // INSTANCIAR O PROJÉTIL NA DIREÇÃO DO CURSOR
     // ----------------------------------------------------------
     private void Atirar()
-    {
-        AudioManager.Instance.TocarTiro();
-        if (prefabProjetil == null)
+{
+    if (prefabProjetil == null) return;
 
-        
-        {
-            Debug.LogWarning("PlayerController: prefabProjetil não foi definido no Inspector!");
-            return;
-        }
+    AudioManager.Instance.TocarTiro();
 
-        // Calcular direção do ponto de disparo até o cursor
-        Vector3 posicaoMouse = cam.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 direcao      = (posicaoMouse - pontoDisparo.position).normalized;
+    // Corrigir o Z para garantir posição correta no mundo 2D
+    Vector3 posicaoMouse = cam.ScreenToWorldPoint(Input.mousePosition);
+    posicaoMouse.z = transform.position.z;
 
-        // Criar o projétil no ponto de disparo com a rotação do jogador
-        GameObject projetil = Instantiate(prefabProjetil, pontoDisparo.position, transform.rotation);
+    // Direção sempre normalizada independente da distância do mouse
+    Vector2 direcao = ((Vector2)posicaoMouse - (Vector2)transform.position).normalized;
 
-        // Dar velocidade ao projétil
-        Rigidbody2D rbProjetil = projetil.GetComponent<Rigidbody2D>();
-        if (rbProjetil != null)
-            rbProjetil.linearVelocity = direcao * velocidadeProjetil;
-    }
+    GameObject projetil = Instantiate(prefabProjetil, pontoDisparo.position, transform.rotation);
+    Rigidbody2D rbProjetil = projetil.GetComponent<Rigidbody2D>();
+    if (rbProjetil != null)
+        rbProjetil.linearVelocity = direcao * velocidadeProjetil;
+}
 
     private void AtualizarSpriteDirecional()
     {   
