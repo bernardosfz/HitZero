@@ -8,6 +8,12 @@ public class ScoreUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textCombo;
     [SerializeField] private TextMeshProUGUI textTimer;
 
+    [Header("Dash")]
+    [SerializeField] private UnityEngine.UI.Image imagemCooldownDash;
+
+    [Header("Referências")]
+    [SerializeField] private PlayerController playerController;
+
     void Start()
     {
         GameManager.Instance.OnPontuacaoAlterada += AtualizarPontuacao;
@@ -22,11 +28,15 @@ public class ScoreUI : MonoBehaviour
 
     void Update()
     {
-        // Timer atualiza todo frame pois muda continuamente
+        // Timer de sobrevivência
         float t = GameManager.Instance.TempoSobrevivencia;
         int minutos = (int)(t / 60f);
         int segundos = (int)(t % 60f);
         textTimer.text = $"{minutos}:{segundos:D2}";
+
+        // Cooldown do dash — preenche a imagem de 0 a 1
+        if (imagemCooldownDash != null)
+            imagemCooldownDash.fillAmount = 1f - playerController.CooldownDashNormalizado;
     }
 
     private void AtualizarPontuacao()
