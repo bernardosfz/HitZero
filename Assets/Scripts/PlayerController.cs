@@ -29,6 +29,12 @@ public class PlayerController : MonoBehaviour
     [Header("Movimento")]
     [SerializeField] private float velocidade = 5f;
 
+    [Header("Sprites Direcionais")]
+    [SerializeField] private Sprite spriteFrontal;  // de frente
+    [SerializeField] private Sprite spriteCostas;   // de costas
+    [SerializeField] private Sprite spriteLateral;  // de lado (direita)
+    private SpriteRenderer spriteRenderer;
+
     // ----------------------------------------------------------
     // CONFIGURAÇÕES DO DASH
     // ----------------------------------------------------------
@@ -79,6 +85,8 @@ public class PlayerController : MonoBehaviour
         rb  = GetComponent<Rigidbody2D>();
         cam = Camera.main;
 
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
         // Segurança: se não definiu ponto de disparo no Inspector,
         // usar a posição do próprio personagem
         if (pontoDisparo == null)
@@ -94,7 +102,7 @@ public class PlayerController : MonoBehaviour
         if (GameManager.Instance.JogoEncerrado) return;
 
         LerEntrada();
-        RotacionarParaMouse();
+        AtualizarSpriteDirecional();
         GerenciarCooldownDash();
         VerificarDisparo();
     }
@@ -226,5 +234,42 @@ public class PlayerController : MonoBehaviour
         Rigidbody2D rbProjetil = projetil.GetComponent<Rigidbody2D>();
         if (rbProjetil != null)
             rbProjetil.linearVelocity = direcao * velocidadeProjetil;
+    }
+
+    private void AtualizarSpriteDirecional()
+    {   
+    Vector3 posicaoMouse = cam.ScreenToWorldPoint(Input.mousePosition);
+    Vector2 direcao = (posicaoMouse - transform.position).normalized;
+    float angulo = Mathf.Atan2(direcao.y, direcao.x) * Mathf.Rad2Deg;
+
+    // Dividir os 360° em 4 zonas de 90°
+    // Frente: mouse abaixo do personagem
+    // Costas: mouse acima do personagem
+    // Lateral: mouse para os lados
+
+    if (angulo > -135f && angulo <= -45f)
+    {
+        // Mouse abaixo → frente
+        spriteRenderer.sprite = spriteFrontal;
+        spriteRenderer.flipX  = false;
+    }
+    else if (angulo > 45f && angulo <= 135f)
+    {
+        // Mouse acima → costas
+        spriteRenderer.sprite = spriteCostas;
+        spriteRenderer.flipX  = false;
+    }
+    else if (angulo > 135f || angulo <= -135f)
+    {
+        // Mouse para esquerda → lateral espelhada
+        spriteRenderer.sprite = spriteLateral;
+        spriteRenderer.flipX  = true;
+    }
+    else
+    {
+        // Mouse para direita → lateral normal
+        spriteRenderer.sprite = spriteLateral;
+        spriteRenderer.flipX  = false;
+    }
     }
 }
