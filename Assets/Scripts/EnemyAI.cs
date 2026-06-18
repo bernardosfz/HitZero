@@ -114,6 +114,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private GameObject efeitoMorte;
     private void Morrer()
     {
+        AudioManager.Instance.TocarMorteInimigo();
         if (efeitoMorte != null)
             Instantiate(efeitoMorte, transform.position, Quaternion.identity);
 

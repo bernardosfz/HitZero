@@ -217,7 +217,10 @@ public class PlayerController : MonoBehaviour
     // ----------------------------------------------------------
     private void Atirar()
     {
+        AudioManager.Instance.TocarTiro();
         if (prefabProjetil == null)
+
+        
         {
             Debug.LogWarning("PlayerController: prefabProjetil não foi definido no Inspector!");
             return;
