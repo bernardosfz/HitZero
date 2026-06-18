@@ -13,6 +13,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip somTiro;
     [SerializeField] private AudioClip somMorteInimigo;
     [SerializeField] private AudioClip somGameOver;
+    [SerializeField] private AudioClip somDash;
 
     void Awake()
     {
@@ -56,5 +57,9 @@ public class AudioManager : MonoBehaviour
     {
         fonteMusica.Stop();
         fonteEfeitos.PlayOneShot(somGameOver);
+    }
+    public void TocarDash()
+    {
+    fonteEfeitos.PlayOneShot(somDash);
     }
 }

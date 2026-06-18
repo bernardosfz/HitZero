@@ -165,9 +165,11 @@ public class PlayerController : MonoBehaviour
     // ----------------------------------------------------------
     private void IniciarDash()
     {
+        AudioManager.Instance.TocarDash();
         // Só dasha se estiver se movendo; dash parado não faz sentido
         if (entradaMovimento == Vector2.zero) return;
 
+        
         estaDashando     = true;
         direcaoDash      = entradaMovimento;
         timerDashDuracao = duracaoDash;
